@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Calculator</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #89f7fe, #66a6ff);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h1 {
+            color: #2563eb;
+            animation: slideDown 1s ease;
+        }
+
+        input {
+            width: 220px;
+            padding: 12px;
+            margin: 8px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #2563eb;
+            outline: none;
+            transform: scale(1.05);
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        #result {
+            margin-top: 20px;
+            color: #166534;
+            font-weight: bold;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Grade Calculator</h1>
+
+        <input type="number" id="mark1" placeholder="Enter Mark 1" min="0" max="100"><br>
+        <input type="number" id="mark2" placeholder="Enter Mark 2" min="0" max="100"><br>
+        <input type="number" id="mark3" placeholder="Enter Mark 3" min="0" max="100"><br>
+        <input type="number" id="mark4" placeholder="Enter Mark 4" min="0" max="100"><br>
+        <input type="number" id="mark5" placeholder="Enter Mark 5" min="0" max="100"><br><br>
+
+        <button onclick="grade()">Result</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function grade() {
+            var marks = [
+                Number(document.getElementById("mark1").value),
+                Number(document.getElementById("mark2").value),
+                Number(document.getElementById("mark3").value),
+                Number(document.getElementById("mark4").value),
+                Number(document.getElementById("mark5").value)
+            ];
+
+            if (marks.some((mark, i) =>
+                document.getElementById("mark" + (i + 1)).value === "" ||
+                mark < 0 || mark > 100
+            )) {
+                alert("Please enter all marks between 0 and 100!");
+                return;
+            }
+
+            var total = marks.reduce((sum, mark) => sum + mark, 0);
+            var average = total / 5;
+            var result;
+
+            if (average >= 90) {
+                result = "A";
+            } else if (average >= 80) {
+                result = "B";
+            } else if (average >= 70) {
+                result = "C";
+            } else if (average >= 60) {
+                result = "D";
+            } else {
+                result = "F";
+            }
+
+            document.getElementById("result").innerHTML =
+                "Grade: " + result +
+                "<br>Total Marks: " + total +
+                "<br>Average: " + average.toFixed(2);
+
+            document.getElementById("result").style.animation = "none";
+            void document.getElementById("result").offsetWidth;
+            document.getElementById("result").style.animation = "fadeIn 0.6s ease";
+        }
+    </script>
+
+</body>
+</html>
